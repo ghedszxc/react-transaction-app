@@ -10,11 +10,11 @@ import * as utilities from "@/lib/utilities";
 const List = () => {
   // Hooks
   const [data, setData] = useState<TList>();
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
+  const [loadingBtn, setLoadingBtn] = useState(false);
 
   // Functions
-  // Effects
-  useEffect(() => {
+  function onPopulateTransactionList() {
     utilities.getTransactionList().then(res => {
       setData(res as TList)
       setLoading(false)
@@ -22,6 +22,25 @@ const List = () => {
       console.error(err);
       setLoading(false)
     });
+  }
+
+  async function onDeleteTransaction(id: string) {
+    setLoadingBtn(true)
+
+    utilities.deleteTransaction(id).then(res => {
+      onPopulateTransactionList()
+      alert(res)
+      setLoadingBtn(false)
+
+    }).catch(err => {
+      console.error(err);
+      setLoading(false)
+    });
+  }
+
+  // Effects
+  useEffect(() => {
+    onPopulateTransactionList()
   }, []);
 
   // Variables
@@ -39,6 +58,15 @@ const List = () => {
       <div><b className="text-gray-500">Price/Qty:</b> ${item?.price}</div>
       <div><b className="text-gray-500">Total Amount: </b> {item?.total_amount}</div>
       <div><b className="text-gray-500">Transaction Type: </b>{item?.transaction_type}</div>
+
+      <div>
+        <button className={`px-4 py-1 mt-4 mb-1 uppercase font-bold text-sm rounded-sm
+          ${!loadingBtn ? 'bg-red-500 hover:bg-red-600 hover:cursor-pointer' : 'bg-gray-700 text-gray-500'}`}
+          onClick={() => { onDeleteTransaction(item?.id) }}
+          disabled={loadingBtn}>
+          Delete
+        </button>
+      </div>
     </div>
   );
 

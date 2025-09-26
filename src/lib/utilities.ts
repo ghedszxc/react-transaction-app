@@ -52,3 +52,20 @@ export async function addTransaction(form: unknown) {
         }
     })
 }
+
+export async function deleteTransaction(transaction_id: string) {
+    return new Promise((resolve, reject) => {
+        try {
+            axios.delete(`https://api.challenges.performativ.com/transaction/${transaction_id}`, {
+                headers: {
+                    'x-api-key': 'FSPkaSbQA55Do0nXhSZkH9eKWVlAMmNP7OKlI2oA',
+                    'candidate_id': '0199757d-2b8a-7ca5-ade2-d86683c7672e' 
+                }
+            }).then(res => {
+                resolve(res?.data)
+            })
+        } catch (err) {
+            return reject(err)
+        }
+    })
+}
