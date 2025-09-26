@@ -6,7 +6,6 @@ type navProps = object
 const nav: FC<navProps> = () => (
     <nav className="p-5 md:p-6 bg-slate-900">
         <div className="flex">
-            
             <Image
                 className="mr-0 md:mr-4"
                 src="/vercel.svg"
