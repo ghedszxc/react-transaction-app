@@ -22,7 +22,7 @@ export async function getInstrumentList() {
 export async function getTransactionList() {
     return new Promise((resolve, reject) => {
         try {
-            axios.get(`https://api.challenges.performativ.com/transactions`, {
+            axios.get(`https://api.challenges.performativ.com/transactions?limit=12`, {
                 headers: {
                     'x-api-key': 'FSPkaSbQA55Do0nXhSZkH9eKWVlAMmNP7OKlI2oA',
                     'candidate_id': '0199757d-2b8a-7ca5-ade2-d86683c7672e' 

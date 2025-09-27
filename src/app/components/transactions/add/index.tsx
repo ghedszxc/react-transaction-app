@@ -40,6 +40,7 @@ const Add = () => {
     utilities.addTransaction(form).then(res => {
         console.log("ADDD::", res)
         // setInstruments(res as TInstruments[])
+        setDialog(false)
     }).catch(err => {
         console.error(err);
     });
@@ -78,10 +79,10 @@ const Add = () => {
         {
             dialog && (
             <div className="grid justify-items-center">
-                <div className="border border-red-500 rounded-lg bg-slate-950 h-auto absolute
-                        w-[98vw] lg:w-[75vw] xl:w-[55vw]">
+                <div className="rounded-lg bg-slate-700 h-auto absolute
+                        w-[98vw] lg:w-[75vw] xl:w-[55vw] p-2">
                     <div className="grid justify-items-end">
-                        <button className="text-2xl mr-3 hover:cursor-pointer hover:text-gray-400">x</button>
+                        <button className="text-2xl mr-3 hover:cursor-pointer hover:text-gray-400" onClick={() => { setDialog(false) }}>x</button>
                     </div>
                     <div className="px-5 mt-4">
                         <form action={onAddTransaction}>

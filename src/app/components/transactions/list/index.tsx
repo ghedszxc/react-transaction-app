@@ -6,12 +6,17 @@ import { useEffect, useState } from "react";
 import * as utilities from "@/lib/utilities";
 
 // Components
+import Update from "@/app/components/transactions/update"
 
 const List = () => {
   // Hooks
   const [data, setData] = useState<TList>();
   const [loading, setLoading] = useState(true);
   const [loadingBtn, setLoadingBtn] = useState(false);
+  const [transactionId, setTransactionId] = useState('');
+  const [updateModal, setUpdateModal] = useState(false);
+
+  
 
   // Functions
   function onPopulateTransactionList() {
@@ -38,6 +43,11 @@ const List = () => {
     });
   }
 
+  function onSelectTransaction(id: string) {
+    setUpdateModal(!updateModal)
+    setTransactionId(id)
+  }
+
   // Effects
   useEffect(() => {
     onPopulateTransactionList()
@@ -60,12 +70,19 @@ const List = () => {
       <div><b className="text-gray-500">Transaction Type: </b>{item?.transaction_type}</div>
 
       <div>
+        <button
+            className="bg-yellow-500 px-4 py-1 mb-4 mr-2 uppercase font-bold text-sm rounded-sm hover:cursor-pointer hover:bg-yellow-600"
+            onClick={() => { onSelectTransaction(item?.id) }}>
+            Update
+        </button>
+
         <button className={`px-4 py-1 mt-4 mb-1 uppercase font-bold text-sm rounded-sm
           ${!loadingBtn ? 'bg-red-500 hover:bg-red-600 hover:cursor-pointer' : 'bg-gray-700 text-gray-500'}`}
           onClick={() => { onDeleteTransaction(item?.id) }}
           disabled={loadingBtn}>
           Delete
         </button>
+
       </div>
     </div>
   );
@@ -85,6 +102,9 @@ const List = () => {
             {listItems}
           </div>
       )}
+
+      {updateModal && (<Update id={transactionId} />)}
+      
     </div>
   )
 }
